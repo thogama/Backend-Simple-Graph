@@ -9,7 +9,7 @@ const app = express();
 const ConnectionBinance = new ConnectBinance
 
 ConnectionBinance.init()
-ConnectionBinance.connection.getMensages()
+//ConnectionBinance.connection.getMensages()
 
 app.use(routes)
 
