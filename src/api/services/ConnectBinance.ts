@@ -1,4 +1,4 @@
-import ConnectWs from "../services/websocket"
+import ConnectWs from "./websocket"
 
 
 class ConnectBinance {

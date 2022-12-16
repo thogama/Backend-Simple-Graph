@@ -1,5 +1,5 @@
 import WebSocket from 'ws'
-import saveWsDataonDB from '../middlewares/saveData';
+import saveWsDataonDB from '../controllers/saveData';
 class ConnectWs {
     ws: WebSocket;
     handshake(url: string) {
@@ -13,11 +13,22 @@ class ConnectWs {
 
 
 
-    getMensages() {
-        this.ws.onmessage = async (event) => {
+    getMensages(entry: number, interval: number) {
+        //entry = how many entry will be saved on database per interval
+        //interval = how many minutes interval
+        let entryCounter = 0
+        let maximumEntrys = 1440 / interval
+        let intervalCounter = 0
 
-            saveWsDataonDB(event.data)
+        this.ws.onmessage = async (event) => {
+            if (entryCounter < entry && intervalCounter < maximumEntrys) {
+                setTimeout(() => saveWsDataonDB(event.data), interval * 60 * 1000)
+
+                entryCounter++
+            }
         }
+
+
     }
 
 
