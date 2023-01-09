@@ -21,9 +21,16 @@ const wss = new WebSocket.Server({ port: 3333 })
 wss.on("connection", ws => {
     console.log("client connected")
 
-    ws.send(JSON.stringify([10,200,30,400,50]))
-    
-    
+    ws.send(JSON.stringify([50]))
+    ws.send(JSON.stringify([5]))
+
+
+
+    setTimeout(() => ws.send(JSON.stringify([10])), 3000)
+
+
+
+
 
     ws.on("close", () => {
         console.log("client disconnected")
