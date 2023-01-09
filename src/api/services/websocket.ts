@@ -13,26 +13,18 @@ class ConnectWs {
 
 
 
-    getMensages(entry: number, interval: number) {
-        //entry = how many entry will be saved on database per interval
-        //interval = how many minutes interval
-        let entryCounter = 0
-        let maximumEntrys = 1440 / interval
-        let intervalCounter = 0
-
+    getMensages(interval: number) {
         this.ws.onmessage = async (event) => {
-            if (entryCounter < entry && intervalCounter < maximumEntrys) {
-                setTimeout(() => saveWsDataonDB(event.data), interval * 60 * 1000)
+            setTimeout(() => {
+                saveWsDataonDB(event.data)
+                console.log("Data received at " + new Date().toLocaleTimeString())
+            }, interval * 60 * 1000)
 
-                entryCounter++
-            }
+
         }
 
 
     }
-
-
-
 
 }
 
