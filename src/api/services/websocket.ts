@@ -1,5 +1,4 @@
 import WebSocket from 'ws'
-import saveWsDataonDB from '../controllers/saveData';
 class ConnectWs {
     ws: WebSocket;
     handshake(url: string) {
@@ -13,17 +12,19 @@ class ConnectWs {
 
 
 
-    getMensages(interval: number) {
-        this.ws.onmessage = async (event) => {
+    getMensages(interval: number, anotherWs: WebSocket) {
+        this.ws.onmessage = (event) => {
             setTimeout(() => {
-                saveWsDataonDB(event.data)
                 console.log("Data received at " + new Date().toLocaleTimeString())
+                anotherWs.send(event.data.toString())
             }, interval * 60 * 1000)
 
 
         }
+    }
 
-
+    destroy() {
+        this.ws.close()
     }
 
 }
